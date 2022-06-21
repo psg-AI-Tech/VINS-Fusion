@@ -1,0 +1,20 @@
+<launch>
+    <arg  name ="rosbagfile" default="/media/zj/ubuntu_only/pra_data/rosbag_data/V1_01_easy.bag" />
+    <arg  name ="configfile" default="/home/zj/catkin_ws/src/rosPack_amend/VINS-Fusion-master/config/euroc/euroc_stereo_imu_config.yaml" />
+
+    <node pkg= "vins" name="vins_estimator" type="vins_node" output="screen" args ="$(arg configfile)" >
+    </node>
+    <node pkg= "loop_fusion" name="loop_fusion_node" type="loop_fusion_node" output="screen" args="$(arg configfile)" >
+    </node>
+    <!-- <rosparam file="$(arg configfile)" command="load"/>
+    <node pkg= "vins" name="vins_estimator" type="vins_node" output="screen" >
+        <rosparam file="$(arg configfile)" command="load"/>
+    </node>
+    <node pkg= "loop_fusion" name="loop_fusion_node" type="loop_fusion_node" output="screen"  >
+        <rosparam file="$(arg configfile)" command="load"/>
+    </node> -->
+
+    <node pkg= "rosbag" name="play" type="play" output="screen" args ="--clock $(arg rosbagfile)" >
+    </node>
+    <!-- rosbag play YOUR_DATASET_FOLDER/MH_01_easy.bag -->
+</launch>
